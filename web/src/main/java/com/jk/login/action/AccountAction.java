@@ -19,13 +19,12 @@ public class AccountAction extends BaseAction{
     @Autowired
     private AccountService service;
 
-
     private List list;
 
 
-    public String  toShow(){
+    public void  toShow(){
         list = service.query();
-        return  "account";
+        super.writeJson(list);
     }
     public String toAddAccount(Account account){
 
