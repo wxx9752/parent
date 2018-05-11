@@ -1,0 +1,55 @@
+﻿!!!!!!!!!!!!!!!!!把当前资源文件放到js文件夹下
+!!!!!!!!!!!!!!!!!把kindeditor-all-min.js里面的SWFUpload 命名空间改为其他的 例如 kind
+					总共133处改动
+
+引入js
+<link rel="stylesheet" href="<%=request.getContextPath()%>/js/kindeditor/themes/default/default.css" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/js/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="<%=request.getContextPath()%>/js/kindeditor/kindeditor-all-min.js"></script>
+	<script charset="utf-8" src="<%=request.getContextPath()%>/js/kindeditor/lang/zh_CN.js"></script>
+	<script charset="utf-8" src="<%=request.getContextPath()%>/js/kindeditor/plugins/code/prettify.js"></script>
+1、初始化
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="intro"]', {
+			uploadJson: "${pageContext.request.contextPath}/js/kindeditor/jsp/upload_json.jsp",
+			fileManagerJson: "${pageContext.request.contextPath}/js/kindeditor/jsp/file_manager_json.jsp",
+			allowFileManager : true,
+			//将富文本编辑中的内容同步到表单序列化中
+			afterBlur:function(){this.sync();}
+		});
+	});
+	
+	2、	当添加数据需要弹框显示kindeditor的写法(需要写在触发添加的方法里)
+	KindEditor.remove('#add textarea[name="t_giftdes"]');
+	$.getScript('<%=request.getContextPath()%>/js/kindeditor/kindeditor-all-min.js', function() {
+		KindEditor.basePath = '<%=request.getContextPath()%>/kindeditor/';
+		var editor = KindEditor.create('#add textarea[name="t_giftdes"]', {
+			cssPath : '<%=request.getContextPath()%>/js/kindeditor/plugins/code/prettify.css',
+			uploadJson : 'kindeditor/jsp/upload_json.jsp',
+			fileManagerJson : 'kindeditor/jsp/file_manager_json.jsp',
+			allowFileManager : true,
+			afterBlur:function(){this.sync();}
+		});
+		prettyPrint();
+	});
+	
+3、 	修改回显需要弹框显示kindeditor的写法(需要写在触发修改的方法里)
+	KindEditor.remove('#add textarea[name="t_giftdes"]');
+	$.getScript('<%=request.getContextPath()%>/js/kindeditor/kindeditor-all-min.js', function() {
+		KindEditor.basePath = '<%=request.getContextPath()%>/kindeditor/';
+		var editor = KindEditor.create('#add textarea[name="t_giftdes"]', {
+			cssPath : '<%=request.getContextPath()%>/js/kindeditor/plugins/code/prettify.css',
+			uploadJson : 'kindeditor/jsp/upload_json.jsp',
+			fileManagerJson : 'kindeditor/jsp/file_manager_json.jsp',
+			allowFileManager : true,
+			afterBlur:function(){this.sync();}
+		});
+		prettyPrint();
+		editor.html(你从数据库查到的需要回显的值);
+		//需要把修改之后的内容继续同步到表单内
+		editor.sync();
+	});
+	
+	
+	

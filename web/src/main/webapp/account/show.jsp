@@ -3,38 +3,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-        <% String path = request.getContextPath(); %>
-            <link href="<%=path %>/js/easyui_full.css" rel="stylesheet" type="text/css">
-            <script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
-            <script type="text/javascript" src="<%=path %>/js/jquery.easyui-1.5.1.min.js"></script>
-            <script type="text/javascript" src="<%=path %>/js/insdep-extend.min.js"></script>
+    <% String path = request.getContextPath(); %>
+    <link rel="stylesheet" href="<%=path %>/js/js/themes/insdep/easyui.css"/>
+    <link rel="stylesheet" href="<%=path %>/js/js/themes/insdep/easyui_animation.css"/>
+    <link rel="stylesheet" href="<%=path %>/js/js/themes/insdep/easyui_plus.css">
+    <link rel="stylesheet" href="<%=path %>/js/js/themes/insdep/insdep_theme_default.css">
+    <link rel="stylesheet" href="<%=path %>/js/js/themes/insdep/icon.css">
+    <script type="text/javascript" src="<%=path %>/js/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=path %>/js/js/jquery.easyui-1.5.1.min.js"></script>
+    <script type="text/javascript" src="<%=path %>/js/js/themes/insdep/jquery.insdep-extend.min.js"></script>
+    <title>Insert title here</title>
+</head>
 <body>
+
 
 
 
 <div id="tiaocha" class="easyui-layout" style="width:600px;height:400px;" data-options="fit:true">
     <div data-options="region:'north',title:'条件查询',split:true" style="height:100px;">
-        分店：
+        商品名称：
         <input id = "brandOfficeid" name="brandOfficeId" >
 
-        员工姓名：
+        订单号：
         <input id = "employeename" name="employeeName" class="easyui-textbox">
-        员工状态：
-        <select name = "employeeState" id = "employeestate"  class="easyui-combobox" style="width:150px;" name = "employeeState">
-            <option value = "2">请选择
-            <option value = "1">工作中
-            <option value = "0">休息中
-
-
-        </select>
-
-        员工等级：<select id = "employeelevel"  class="easyui-combobox" style="width:150px;" name = "employeeLevel">
-        <option value = "0">请选择
-        <option value = "2">普通员工
-        <option value = "1">高级员工
-
-
-    </select>
 
 
         <input type="button" class="easyui-linkbutton" value="查询" onclick="search()">
@@ -76,12 +67,12 @@
     function queryData()
     {
         $('#employeeTable').datagrid({
-            url:'<%=path%>/test!toShow.action',
+            url:'<%=path%>/test/toShow.action',
             queryParams:{
-                "employeeName":$("#employeename").val(),
-                "employeeState":$("#employeestate").val(),
-                "employeeLevel":$("#employeelevel").val(),
-                "brandOfficeId":$("#brandOfficeid").val()
+                "jinprice":$("#jinprice").val(),
+                "membernum":$("#membernum").val(),
+                "profit":$("#profit").val(),
+
             },
             fitColumns:true,
             pagination:true,
@@ -112,10 +103,15 @@
 
 
                 {field:'State',title:'删除订单',width:50,align:'center',
-                    formatter: function(value,row,index){
-                        return "<a href='javascript:frozen2("+row.employeeId+")'>开除</a>";
-                    }
-                },
+                    formatter: function(value,row,index) {
+                        return "<a href='javascript:frozen2(" + row.cwid + ")'>删除订单</a>";
+
+
+                    }  }
+
+
+
+
 
             ]],
             onLoadSuccess:function(data){

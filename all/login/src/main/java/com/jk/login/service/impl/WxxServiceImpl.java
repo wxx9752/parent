@@ -16,14 +16,14 @@ public class WxxServiceImpl implements WxxService {
     private WxxDao wxxdao;
 
     public List<Power> getTree(String name) {
-     /* String hql="SELECT DISTINCT tp.* FROM  User tu \n" +
-                "\t\t\tLEFT JOIN User_Role ur ON ur.u_id=tu.u_id\n" +
-                "\t\t\tLEFT JOIN Role tr ON ur.r_id=tr.r_id\n" +
-                "\t\t\tLEFT JOIN Role_Power rp ON rp.r_id=tr.r_id\n" +
-                "\t\t\tLEFT JOIN POWER tp ON tp.p_id=rp.p_id\n" +
-                "\t\t\twhere tu.u_username='"+name+"'";*/
-     String hql =" from Power ";
+     String sql="SELECT DISTINCT tp.* FROM  six.user tu \n" +
+             "                LEFT JOIN user_role ur ON ur.u_id=tu.u_id\n" +
+             "                LEFT JOIN Role tr ON ur.r_id=tr.r_id\n" +
+             "                LEFT JOIN Role_Power rp ON rp.r_id=tr.r_id\n" +
+             "                LEFT JOIN test.POWER tp ON tp.id=rp.p_id\n" +
+             "                WHERE tu.u_username=?";
+   /* String hql =" from Power ";*/
 
-        return wxxdao.getTree(hql);
+        return wxxdao.getTree(sql,name);
     }
 }

@@ -1,19 +1,17 @@
 package com.jk.login.action;
+import com.alibaba.fastjson.JSON;
 import com.jk.login.model.Account;
 import com.jk.login.service.AccountService;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.util.List;
-
 @ParentPackage("struts-default")
-@Namespace("/")
-@Action(value = "test",results = {
-        @Result(name = "account",location = "/show.jsp")
-})
+@Namespace("/test")
 public class AccountAction extends BaseAction{
 
     @Autowired
@@ -21,22 +19,43 @@ public class AccountAction extends BaseAction{
 
     private List list;
 
+    private Account asd = new Account();
 
-    public void  toShow(){
-        list = service.query();
-        super.writeJson(list);
+    public Account getAsd() {
+        return asd;
     }
-    public String toAddAccount(Account account){
 
-        service.addAccount(account);
+    public void setAsd(Account asd) {
+        this.asd = asd;
+    }
 
-        return "";
+    @Action(value = "toShow")
+    public void  toShow(){
+        List list = service.query();
+
+
+        // System.out.print(list);
+        String jsonStr= JSON.toJSONString(list);
+        try {
+            ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+            ServletActionContext.getResponse().getWriter().write(jsonStr);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+    @Action(value = "toAddAccount")
+    public void toAddAccount(){
+
+        service.addAccount(asd);
+
     }
 
     public List getList() {
         return list;
     }
-
-
 
 }

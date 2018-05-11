@@ -1,8 +1,5 @@
 package com.jk.login.model;
-
-
 import javax.persistence.*;
-
 @Entity
 @Table(name = "account")
 public class Account {

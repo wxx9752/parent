@@ -2,6 +2,7 @@ package com.jk.login.dao.impl;
 
 import com.jk.login.dao.AccountDao;
 import com.jk.login.model.Account;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AccountDaoImpl implements AccountDao {
+public class AccountDaoImpl implements AccountDao  {
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -18,6 +19,9 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     public void account(Account account) {
-        sessionFactory.openSession().save(account);
+        Session session=sessionFactory.openSession();
+        session.save(account);
+        session.beginTransaction().commit();
+        session.close();
     }
 }
